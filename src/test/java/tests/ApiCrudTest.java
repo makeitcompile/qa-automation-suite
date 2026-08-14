@@ -1,10 +1,11 @@
 package tests;
 
 import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.*;
 import utils.ConfigReader;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
@@ -40,6 +41,9 @@ public class ApiCrudTest {
     @BeforeAll
     static void setup() {
         RestAssured.baseURI = ConfigReader.get("base.url");
+        if (Boolean.parseBoolean(ConfigReader.get("logging.enabled"))) {
+            RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
+        }
     }
 
     @Test
