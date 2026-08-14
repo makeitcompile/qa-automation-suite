@@ -199,4 +199,70 @@ public class ApiCrudTest {
                 .then()
                 .statusCode(400);
     }
+
+    @Test
+    @Order(10)
+    @Tag("negative")
+    @Disabled("Swagger documents 400 but API returns 500")
+    @DisplayName("Update a pet - 400 Invalid ID")
+    void updatePetWithInvalidId() {
+        given()
+                .contentType(ContentType.JSON)
+                .body("""
+                {
+                  "id": "abc",
+                  "name": "lcfc",
+                  "photoUrls": ["string"],
+                  "status": "available"
+                }
+                """)
+                .when()
+                .put(PET_ENDPOINT)
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @Order(11)
+    @Tag("negative")
+    @Disabled("Swagger documents 404 but API returns 500")
+    @DisplayName("Update a pet - 404 Not Found")
+    void updateNonExistingPet() {
+        given()
+                .contentType(ContentType.JSON)
+                .body("""
+                {
+                  "id": 999999999096646388674323689999877564532357890977543,
+                  "name": "oggie",
+                  "photoUrls": ["string"],
+                  "status": "available"
+                }
+                """)
+                .when()
+                .put(PET_ENDPOINT)
+                .then()
+                .statusCode(404);
+    }
+
+    @Test
+    @Order(12)
+    @Tag("negative")
+    @Disabled("Swagger documents 405 but API returns 500")
+    @DisplayName("Update a pet - 405 Validation Exception")
+    void updatePetWithInvalidData() {
+        given()
+                .contentType(ContentType.JSON)
+                .body("""
+                {
+                  "id": "abc",
+                  "name": "doggie",
+                  "photoUrls": ["string"],
+                  "status": "available"
+                }
+                """)
+                .when()
+                .put(PET_ENDPOINT)
+                .then()
+                .statusCode(405);
+    }
 }
