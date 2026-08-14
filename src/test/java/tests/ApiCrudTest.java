@@ -17,6 +17,8 @@ public class ApiCrudTest {
     private static final String PET_STATUS = "available";
     private static final long MAX_RESPONSE_TIME = 3000L;
     private static final int PET_ID = 12345;
+    private static final String UPDATED_NAME = "doggie updated for update endpoint";
+    private static final String UPDATED_STATUS = "updated";
 
     private static final String CREATE_BODY = """
             {
@@ -38,6 +40,27 @@ public class ApiCrudTest {
               "status": "%s"
             }
             """.formatted(PET_ID, PET_NAME, PET_STATUS);
+
+    private static final String UPDATE_BODY = """
+            {
+              "id": %d,
+              "category": {
+                "id": 0,
+                "name": "string"
+              },
+              "name": "%s",
+              "photoUrls": [
+                "string"
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "%s"
+            }
+            """.formatted(PET_ID, UPDATED_NAME, UPDATED_STATUS);
 
     @BeforeAll
     static void setup() {
@@ -80,6 +103,23 @@ public class ApiCrudTest {
                 .body("name", equalTo(PET_NAME))
                 .body("status", equalTo(PET_STATUS))
                 .body("id", equalTo(PET_ID))
+                .time(lessThan(MAX_RESPONSE_TIME));
+    }
+
+    @Test
+    @Order(3)
+    @Tag("positive")
+    @DisplayName("Update a pet - 200 OK")
+    void updatePet() {
+        given()
+                .contentType(ContentType.JSON)
+                .body(UPDATE_BODY)
+                .when()
+                .put(PET_ENDPOINT)
+                .then()
+                .statusCode(200)
+                .body("name", equalTo(UPDATED_NAME))
+                .body("status", equalTo(UPDATED_STATUS))
                 .time(lessThan(MAX_RESPONSE_TIME));
     }
 }
