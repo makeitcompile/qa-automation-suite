@@ -147,4 +147,16 @@ public class ApiCrudTest {
                 .then()
                 .statusCode(404);
     }
+
+    @Test
+    @Order(6)
+    @Tag("negative")
+    @DisplayName("Delete non existing pet - 404 Not Found")
+    void deleteNonExistingPet() {
+        given()
+                .when()
+                .delete(PET_ENDPOINT + "/00000000000000000000000000000000000000000000")
+                .then()
+                .statusCode(404);
+    }
 }
