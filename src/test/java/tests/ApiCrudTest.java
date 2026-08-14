@@ -173,4 +173,30 @@ public class ApiCrudTest {
                 .then()
                 .statusCode(405);
     }
+
+    @Test
+    @Order(8)
+    @Tag("negative")
+    @Disabled("Swagger documents 400 but API returns 404")
+    @DisplayName("Retrieve a pet - 400 Invalid ID")
+    void retrievePetWithInvalidId() {
+        given()
+                .when()
+                .get(PET_ENDPOINT + "/aql")
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    @Order(9)
+    @Tag("negative")
+    @Disabled("Swagger documents 400 but API returns 404")
+    @DisplayName("Delete a pet with invalid ID - 400 Bad Request")
+    void deletePetWithInvalidId() {
+        given()
+                .when()
+                .delete(PET_ENDPOINT + "/aql")
+                .then()
+                .statusCode(400);
+    }
 }
