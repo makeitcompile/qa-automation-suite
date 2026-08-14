@@ -159,4 +159,18 @@ public class ApiCrudTest {
                 .then()
                 .statusCode(404);
     }
+
+    @Test
+    @Order(7)
+    @Tag("negative")
+    @DisplayName("Create a pet - 405 Invalid Input")
+    void createPetWithInvalidInput() {
+        given()
+                .contentType(ContentType.JSON)
+                .body("")
+                .when()
+                .post(PET_ENDPOINT)
+                .then()
+                .statusCode(405);
+    }
 }
