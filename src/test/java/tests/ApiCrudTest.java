@@ -1,7 +1,12 @@
 package tests;
 
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.TestMethodOrder;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.*;
+import utils.ConfigReader;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ApiCrudTest {
@@ -32,4 +37,26 @@ public class ApiCrudTest {
             }
             """.formatted(PET_NAME, PET_STATUS);
 
+    @BeforeAll
+    static void setup() {
+        RestAssured.baseURI = ConfigReader.get("base.url");
+    }
+
+    @Test
+    @Order(1)
+    @Tag("positive")
+    @DisplayName("Create a pet - 200 OK")
+    void createPet() {
+        given()
+                .contentType(ContentType.JSON)
+                .body(CREATE_BODY)
+                .when()
+                .post(PET_ENDPOINT)
+                .then()
+                .statusCode(200)
+                .body("name", equalTo(PET_NAME))
+                .body("status", equalTo(PET_STATUS))
+                .header("Content-Type", containsString("application/json"))
+                .time(lessThan(MAX_RESPONSE_TIME));
+    }
 }
