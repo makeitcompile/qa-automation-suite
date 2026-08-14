@@ -11,4 +11,25 @@ public class ApiCrudTest {
     private static final String PET_STATUS = "available";
     private static final long MAX_RESPONSE_TIME = 3000L;
 
+    private static final String CREATE_BODY = """
+            {
+              "id": 0,
+              "category": {
+                "id": 0,
+                "name": "string"
+              },
+              "name": "%s",
+              "photoUrls": [
+                "string"
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "%s"
+            }
+            """.formatted(PET_NAME, PET_STATUS);
+
 }
