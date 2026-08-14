@@ -16,10 +16,11 @@ public class ApiCrudTest {
     private static final String PET_NAME = "doggie";
     private static final String PET_STATUS = "available";
     private static final long MAX_RESPONSE_TIME = 3000L;
+    private static final int PET_ID = 12345;
 
     private static final String CREATE_BODY = """
             {
-              "id": 0,
+              "id": %d,
               "category": {
                 "id": 0,
                 "name": "string"
@@ -36,7 +37,7 @@ public class ApiCrudTest {
               ],
               "status": "%s"
             }
-            """.formatted(PET_NAME, PET_STATUS);
+            """.formatted(PET_ID, PET_NAME, PET_STATUS);
 
     @BeforeAll
     static void setup() {
@@ -60,7 +61,25 @@ public class ApiCrudTest {
                 .statusCode(200)
                 .body("name", equalTo(PET_NAME))
                 .body("status", equalTo(PET_STATUS))
+                .body("id", equalTo(PET_ID))
                 .header("Content-Type", containsString("application/json"))
+                .time(lessThan(MAX_RESPONSE_TIME));
+    }
+
+    @Test
+    @Order(2)
+    @Tag("positive")
+    @DisplayName("Retrieve a pet - 200 OK")
+    void retrievePet() {
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(PET_ENDPOINT + "/" + PET_ID)
+                .then()
+                .statusCode(200)
+                .body("name", equalTo(PET_NAME))
+                .body("status", equalTo(PET_STATUS))
+                .body("id", equalTo(PET_ID))
                 .time(lessThan(MAX_RESPONSE_TIME));
     }
 }
