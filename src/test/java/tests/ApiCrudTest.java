@@ -135,4 +135,16 @@ public class ApiCrudTest {
                 .statusCode(200)
                 .time(lessThan(MAX_RESPONSE_TIME));
     }
+
+    @Test
+    @Order(5)
+    @Tag("negative")
+    @DisplayName("Retrieve non existing pet - 404 Not Found")
+    void retrieveNonExistingPet() {
+        given()
+                .when()
+                .get(PET_ENDPOINT + "/000000000")
+                .then()
+                .statusCode(404);
+    }
 }
