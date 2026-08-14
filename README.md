@@ -12,6 +12,3 @@ UI only: `./gradlew test --tests "tests.FinancialReportsTest"`
 
 ## Configuration
 Update `src/test/resources/config.properties` to change URLs, browser or logging.
-
-## CI/CD
-Tests run automatically on every push. Report available in GitHub Actions artifacts.
