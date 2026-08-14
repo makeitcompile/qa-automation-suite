@@ -122,4 +122,17 @@ public class ApiCrudTest {
                 .body("status", equalTo(UPDATED_STATUS))
                 .time(lessThan(MAX_RESPONSE_TIME));
     }
+
+    @Test
+    @Order(4)
+    @Tag("positive")
+    @DisplayName("Delete a pet - 200 OK")
+    void deletePet() {
+        given()
+                .when()
+                .delete(PET_ENDPOINT + "/" + PET_ID)
+                .then()
+                .statusCode(200)
+                .time(lessThan(MAX_RESPONSE_TIME));
+    }
 }
