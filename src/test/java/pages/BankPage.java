@@ -3,6 +3,8 @@ package pages;
 import com.codeborne.selenide.SelenideElement;
 import utils.ConfigReader;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
@@ -17,7 +19,11 @@ public class BankPage {
             $$("button").findBy(text("ACCEPT ALL"));
 
     public void acceptCookies() {
-        acceptAllButton.shouldBe(visible).click();
+        try {
+            acceptAllButton.shouldBe(visible, Duration.ofSeconds(12)).click();
+        } catch (Exception e) {
+            System.out.println("[UI] Cookie banner not found - skipping");
+        }
     }
 
     private static final String HAMBURGER_JS =
