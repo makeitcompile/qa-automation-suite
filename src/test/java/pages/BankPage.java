@@ -5,8 +5,7 @@ import utils.ConfigReader;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class BankPage {
 
@@ -19,5 +18,13 @@ public class BankPage {
 
     public void acceptCookies() {
         acceptAllButton.shouldBe(visible).click();
+    }
+
+    private static final String HAMBURGER_JS =
+            "document.querySelector(\"a[aria-label='Site menu']\").click();";
+
+    public void clickHamburgerMenu() {
+        executeJavaScript(HAMBURGER_JS);
+        sleep(2000);
     }
 }
