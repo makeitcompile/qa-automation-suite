@@ -15,12 +15,11 @@ public class BankPage {
         open(ConfigReader.get("ui.url"));
     }
 
-    private static final SelenideElement acceptAllButton =
-            $$("button").findBy(text("ACCEPT ALL"));
-
     public void acceptCookies() {
         try {
-            acceptAllButton.shouldBe(visible, Duration.ofSeconds(12)).click();
+            $$("button").findBy(text("ACCEPT ALL"))
+                    .shouldBe(visible, Duration.ofSeconds(12))
+                    .click();
         } catch (Exception e) {
             System.out.println("[UI] Cookie banner not found - skipping");
         }
