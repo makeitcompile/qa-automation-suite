@@ -37,4 +37,12 @@ public class BankPage {
         executeJavaScript("Array.from(document.querySelectorAll('a')).find(a => a.textContent.trim() === '" + "Financial Reports" + "')?.click();");
         sleep(2000);
     }
+
+    public SelenideElement getSection2026() {
+        return $$("h2, h3, h4, div, span").findBy(text("2026"));
+    }
+
+    public SelenideElement getReportLink() {
+        return $("a[href*='financial-report']");
+    }
 }
