@@ -1,9 +1,12 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import pages.BankPage;
 import utils.ConfigReader;
+
+import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class FinancialReportsTest {
 
@@ -15,5 +18,12 @@ public class FinancialReportsTest {
         Configuration.headless = Boolean.parseBoolean(ConfigReader.get("headless"));
         Configuration.timeout = Long.parseLong(ConfigReader.get("timeout"));
         bankPage = new BankPage();
+    }
+
+
+
+    @AfterEach
+    void tearDown() {
+        closeWebDriver();
     }
 }
