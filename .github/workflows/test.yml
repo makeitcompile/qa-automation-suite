@@ -15,3 +15,8 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+
+      - uses: browser-actions/setup-chrome@v1
+      - name: Run tests
+        run: ./gradlew test -Dheadless=true
+        continue-on-error: true
