@@ -26,6 +26,4 @@ jobs:
         if: always()
         with:
           name: test-report
-          path: build/reports/tests/test/
-                build/reports/tests/*.png
-                build/reports/tests/*.html
+          path: build/reports/tests/
