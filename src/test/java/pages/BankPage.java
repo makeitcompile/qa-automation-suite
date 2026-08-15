@@ -27,4 +27,14 @@ public class BankPage {
         executeJavaScript(HAMBURGER_JS);
         sleep(2000);
     }
+
+    public void openAboutUs() {
+        executeJavaScript("Array.from(document.querySelectorAll('a')).find(a => a.textContent.trim() === '" + "About Us" + "')?.click();");
+        sleep(1000);
+    }
+
+    public void openFinancialReports() {
+        executeJavaScript("Array.from(document.querySelectorAll('a')).find(a => a.textContent.trim() === '" + "Financial Reports" + "')?.click();");
+        sleep(2000);
+    }
 }
