@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v7
@@ -15,9 +15,6 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-
-      - name: Grant execute permission
-        run: chmod +x gradlew
 
       - uses: browser-actions/setup-chrome@v1
       - name: Run tests
